@@ -1,0 +1,2823 @@
+\documentclass[12pt]{article}
+
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{bm}
+\usepackage{mathrsfs}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{setspace}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{caption}
+\usepackage{enumitem}
+\usepackage{siunitx}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+
+\onehalfspacing
+
+\captionsetup{
+    font=small,
+    labelfont=bf,
+    justification=centering
+}
+
+\numberwithin{equation}{section}
+
+
+\DeclareMathOperator{\esssup}{ess\,sup}
+\DeclareMathOperator{\Lip}{Lip}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\diag}{diag}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\Q}{\mathfrak{Q}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\dd}{\,\mathrm{d}}
+
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+
+\theoremstyle{remark}
+
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+
+\title{
+\textbf{Scott's Coherence Functional}\\[0.5em]
+\large A Nonlinear Trajectory-Dependent Framework
+for Damping, Oscillatory Memory, and Higher-Order
+Dynamical Interactions
+}
+
+\author{
+Jaxson Scott Levoy Freeman\\
+\small Independent student researcher\\
+\small Corresponding author:
+\texttt{jaxsonstormy@gmail.com}
+}
+
+\date{November 2026}
+
+
+\begin{document}
+
+\maketitle
+
+
+\begin{abstract}
+
+This paper introduces Scott's Coherence Functional,
+a multicomponent mathematical construction designed
+to investigate interactions among nonlinear state
+dependence, accumulated temporal effects,
+exponential attenuation, oscillatory phase,
+higher-order derivatives, and acceleration-dependent
+contributions.
+
+The proposed functional is formulated through three
+principal components: a nonlocal integral contribution
+involving mixed second-order spatial derivatives,
+a product-weighted third-order derivative contribution,
+and a nonlinear correction incorporating velocity
+and acceleration.
+
+The construction is examined within an appropriate
+space of twice continuously differentiable
+trajectories. Under sufficient regularity,
+boundedness, and sign assumptions, we establish
+well-definedness, continuity in time, and an explicit
+global estimate on finite intervals.
+
+We further investigate the mathematical structure
+of the integral kernel, derive estimates for
+exponentially attenuated memory contributions,
+and examine parameter sensitivity with respect
+to generalized damping coefficients.
+
+Additional results concern perturbations of
+trajectories, limiting regimes, nonlinear
+attenuation, and possible extensions to higher-order
+dynamical systems.
+
+The analysis also identifies limitations of the
+current construction, particularly concerning
+trajectory-independent bounds, variational
+differentiability, conservation properties, and
+numerical convergence.
+
+The purpose of this work is to establish a
+mathematically explicit framework for examining
+the structural properties of Scott's Coherence
+Functional and to provide a foundation for
+subsequent analytical investigation.
+
+\end{abstract}
+
+\noindent\textbf{Keywords:}
+coherence functional; nonlinear dynamics;
+functional analysis; oscillatory integrals;
+exponential damping; memory kernels;
+trajectory perturbation; asymptotic analysis;
+higher-order derivatives.
+
+\medskip
+
+\noindent\textbf{2020 Mathematics Subject Classification:}
+Primary 26B15; Secondary 34A34, 45J05, 47H30.
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+
+\section{Introduction}
+
+Many mathematical systems involve interactions
+between multiple variables that evolve continuously
+over time.
+
+Such systems may contain several different
+mechanisms simultaneously, including nonlinear
+coupling, accumulated phase, exponential
+attenuation, state-dependent weighting, and
+higher-order derivatives.
+
+A mathematical representation of these
+interactions must account for both the instantaneous
+configuration of a system and the influence of
+its evolution over an interval of time.
+
+The purpose of this paper is to introduce a
+trajectory-dependent functional that combines
+these mechanisms into a single mathematical
+construction.
+
+We refer to this construction as
+\textit{Scott's Coherence Functional}.
+
+The functional is designed around three
+mathematically distinguishable contributions.
+
+The first is a nonlocal integral term combining
+mixed second-order spatial derivatives,
+exponential damping, accumulated oscillatory
+phase, and nonlinear velocity dependence.
+
+The second introduces third-order derivatives
+weighted by products of state-dependent factors.
+
+The third introduces a nonlinear correction
+involving both velocity and acceleration.
+
+Together, these contributions provide a
+framework for investigating the relationships
+between instantaneous state information,
+historical trajectory dependence, and
+higher-order dynamical quantities.
+
+\subsection{Motivation}
+
+A purely instantaneous mathematical expression
+may be insufficient when the behavior of a
+system depends on its preceding evolution.
+
+Integral expressions provide one way of
+representing such dependence.
+
+In particular, an integral whose upper limit
+varies with observation time can incorporate
+information from earlier states while allowing
+the influence of those states to depend on
+subsequent evolution.
+
+Similarly, exponential factors can represent
+attenuation, while trigonometric factors can
+represent oscillatory interactions.
+
+Nonlinear denominators provide additional
+mechanisms for modifying the relative influence
+of state variables, velocities, and accelerations.
+
+Scott's Coherence Functional combines these
+ideas into a single expression.
+
+\subsection{Principal Mathematical Questions}
+
+The construction raises several questions:
+
+\begin{enumerate}[label=\arabic*.]
+
+\item Under what regularity conditions is the
+functional well-defined?
+
+\item Can its magnitude be bounded uniformly
+over a finite observation interval?
+
+\item How does accumulated damping influence
+historical trajectory contributions?
+
+\item What role does oscillatory phase play
+in the resulting integral?
+
+\item Is the functional continuous with respect
+to time and perturbations of the trajectory?
+
+\item How sensitive is the construction to
+changes in its defining parameters?
+
+\item What limiting behavior occurs under
+strong damping, weak damping, and short-time
+conditions?
+
+\item Can the construction be generalized to
+higher-order or variational mathematical systems?
+
+\end{enumerate}
+
+The following sections develop the mathematical
+framework required to investigate these questions.
+
+
+\section{Definition and Mathematical Framework}
+
+\subsection{State trajectories}
+
+Let \(n\in\N\) be a positive integer and
+let \(T>0\) be a finite observation horizon.
+
+Consider a trajectory
+
+\[
+\mathbf{x}(t)
+=
+(x_1(t),x_2(t),\ldots,x_n(t))
+\]
+
+taking values in \(\R^n\).
+
+Initially, assume that
+
+\[
+\mathbf{x}\in C^2([0,T],\R^n).
+\]
+
+The first and second derivatives are denoted by
+
+\[
+\dot{x}_i(t)
+=
+\frac{\dd x_i}{\dd t},
+\]
+
+and
+
+\[
+\ddot{x}_i(t)
+=
+\frac{\dd^2x_i}{\dd t^2}.
+\]
+
+The functions \(\Phi_i\) and \(\Psi_i\)
+describe state-dependent quantities.
+
+The functions \(\omega_i\) and
+\(\Omega_{ijk}\) determine damping and
+oscillatory contributions.
+
+The function \(\Theta_{ijk}\) represents
+an additional accumulated phase contribution.
+
+The coefficients \(\chi_m\), \(\kappa_{ij}\),
+and \(\Lambda_{ijk}\) determine the strength
+of the corresponding nonlinear terms.
+
+\subsection{Functional spaces}
+
+For a fixed interval \([0,T]\), define
+
+\[
+\mathcal{X}_T
+=
+C^2([0,T],\R^n).
+\]
+
+Equip this space with the norm
+
+\[
+\begin{aligned}
+\norm{\mathbf{x}}_{C^2}
+={}&
+\max_{t\in[0,T]}
+\norm{\mathbf{x}(t)}
+\\
+&+
+\max_{t\in[0,T]}
+\norm{\dot{\mathbf{x}}(t)}
+\\
+&+
+\max_{t\in[0,T]}
+\norm{\ddot{\mathbf{x}}(t)}.
+\end{aligned}
+\]
+
+With this norm, \(\mathcal{X}_T\) is a
+Banach space.
+
+This provides a natural setting for studying
+trajectory-dependent mathematical quantities
+because the norm simultaneously controls
+the state, velocity, and acceleration.
+
+Assume that
+
+\[
+\Phi_i:\R^n\times[0,T]\to\R
+\]
+
+and
+
+\[
+\Psi_i:\R^n\times[0,T]\to\R.
+\]
+
+All spatial derivatives appearing below are
+evaluated at the corresponding trajectory
+point.
+
+For example,
+
+\[
+\frac{\partial^2\Phi_i}
+{\partial x_j\partial x_k}
+\]
+
+inside the integral denotes
+
+\[
+\frac{\partial^2\Phi_i}
+{\partial x_j\partial x_k}
+(\mathbf{x}(s),s).
+\]
+
+Likewise, the mixed derivative in the
+second component is evaluated as
+
+\[
+\frac{\partial^3\Phi_i}
+{\partial x_i^2\partial t}
+(\mathbf{x}(t),t),
+\]
+
+where the partial derivative with respect
+to time is taken while holding the spatial
+argument fixed.
+
+\subsection{Definition of the functional}
+
+\begin{definition}[Scott's Coherence Functional]
+
+Let \(T>0\), let \(n\in\N\), and let
+
+\[
+\mathbf{x}\in\mathcal{X}_T.
+\]
+
+Whenever all required derivatives and
+integrals exist, define
+
+\[
+\Q:
+\mathcal{X}_T\times[0,T]\to\R
+\]
+
+by the expression
+
+\[
+\begin{aligned}
+\Q(\mathbf{x},t)
+={}&
+\sum_{i,j,k=1}^{n}
+\int_0^t
+\frac{\partial^2\Phi_i}
+{\partial x_j\partial x_k}
+(\mathbf{x}(s),s)
+\\
+&\quad\cdot
+\exp\left(
+-\int_s^t
+\frac{\omega_i(\mathbf{x}(\xi))}
+{1+|\dot{x}_j(\xi)|}
+\,\dd\xi
+\right)
+\\
+&\quad\cdot
+\sin\left(
+\int_s^t
+\Omega_{ijk}(\mathbf{x}(\eta))
+\,\dd\eta
++\Theta_{ijk}(s,t)
+\right)
+\\
+&\quad\cdot
+\frac{\dot{x}_j(s)\dot{x}_k(s)}
+{1+\displaystyle\sum_{m=1}^{n}
+\chi_mx_m^2(s)}
+\\
+&\quad\cdot
+\left(
+1+
+\frac{
+\partial\Psi_i/\partial x_j
+(\mathbf{x}(s),s)
+}{
+1+
+\left|
+\partial\Psi_k/\partial x_i
+(\mathbf{x}(s),s)
+\right|
+}
+\right)
+\dd s
+\\[8pt]
+&+
+\sum_{i=1}^{n}
+\frac{\partial^3\Phi_i}
+{\partial x_i^2\partial t}
+(\mathbf{x}(t),t)
+\prod_{j=1}^{n}
+(1+\kappa_{ij}x_j^2(t))
+\\[8pt]
+&+
+\sum_{i,j,k=1}^{n}
+\Lambda_{ijk}
+\frac{
+\dot{x}_i(t)\dot{x}_j(t)\ddot{x}_k(t)
+}{
+1+
+|\dot{x}_i(t)\dot{x}_j(t)|
++
+|\ddot{x}_k(t)|
+}.
+\end{aligned}
+\tag{2.1}
+\]
+
+The resulting quantity is called Scott's
+Coherence Functional.
+
+\end{definition}
+
+The functional can be decomposed into
+three principal components:
+
+\[
+\Q
+=
+\Q_I+\Q_D+\Q_A.
+\]
+
+Here:
+
+- \(\Q_I\) denotes the nonlocal integral contribution.
+- \(\Q_D\) denotes the product-weighted derivative contribution.
+- \(\Q_A\) denotes the nonlinear acceleration contribution.
+
+This decomposition will be used throughout
+the subsequent analysis.
+
+\subsection{The integral component}
+
+Define
+
+\[
+\begin{aligned}
+\Q_I(\mathbf{x},t)
+={}&
+\sum_{i,j,k=1}^{n}
+\int_0^t
+H_{ijk}(\mathbf{x},s)
+\\
+&\qquad\cdot
+E_{ij}(s,t)
+\sin(P_{ijk}(s,t))
+\,\dd s,
+\end{aligned}
+\]
+
+where the instantaneous trajectory-dependent
+factor is
+
+\[
+\begin{aligned}
+H_{ijk}(\mathbf{x},s)
+={}&
+\frac{\partial^2\Phi_i}
+{\partial x_j\partial x_k}
+(\mathbf{x}(s),s)
+\\
+&\cdot
+\frac{\dot{x}_j(s)\dot{x}_k(s)}
+{1+\sum_{m=1}^{n}\chi_mx_m^2(s)}
+\\
+&\cdot
+\left(
+1+
+\frac{
+\partial\Psi_i/\partial x_j
+(\mathbf{x}(s),s)
+}{
+1+
+\left|
+\partial\Psi_k/\partial x_i
+(\mathbf{x}(s),s)
+\right|
+}
+\right).
+\end{aligned}
+\]
+
+The exponential attenuation factor is
+
+\[
+E_{ij}(s,t)
+=
+\exp\left(
+-\int_s^t
+\frac{\omega_i(\mathbf{x}(\xi))}
+{1+|\dot{x}_j(\xi)|}
+\,\dd\xi
+\right).
+\]
+
+The accumulated oscillatory phase is
+
+\[
+P_{ijk}(s,t)
+=
+\int_s^t
+\Omega_{ijk}(\mathbf{x}(\eta))
+\,\dd\eta
++
+\Theta_{ijk}(s,t).
+\]
+
+This decomposition separates the
+instantaneous trajectory contribution from
+the historical weighting mechanism.
+
+\subsection{The derivative component}
+
+The second component is defined by
+
+\[
+\Q_D(\mathbf{x},t)
+=
+\sum_{i=1}^{n}
+\frac{\partial^3\Phi_i}
+{\partial x_i^2\partial t}
+(\mathbf{x}(t),t)
+\prod_{j=1}^{n}
+(1+\kappa_{ij}x_j^2(t)).
+\]
+
+It introduces higher-order derivative
+information combined with nonlinear
+state-dependent weighting.
+
+\subsection{The acceleration component}
+
+The final component is
+
+\[
+\Q_A(\mathbf{x},t)
+=
+\sum_{i,j,k=1}^{n}
+\Lambda_{ijk}
+\frac{
+\dot{x}_i(t)\dot{x}_j(t)\ddot{x}_k(t)
+}{
+1+
+|\dot{x}_i(t)\dot{x}_j(t)|
++
+|\ddot{x}_k(t)|
+}.
+\]
+
+This component introduces nonlinear
+dependence on both velocity and acceleration.
+
+
+\section{Assumptions and Preliminary Results}
+
+A rigorous analysis requires sufficient
+conditions on the coefficient functions,
+trajectory, and parameters.
+
+The following assumptions will be used
+throughout the principal existence and
+boundedness results.
+
+\begin{assumption}[Regularity]
+
+The functions \(\Phi_i\) possess continuous
+spatial derivatives through order three.
+
+Their mixed derivatives
+
+\[
+\frac{\partial^3\Phi_i}
+{\partial x_i^2\partial t}
+\]
+
+are continuous.
+
+The functions \(\Psi_i\), \(\omega_i\),
+and \(\Omega_{ijk}\) are continuous
+wherever evaluated.
+
+The phase functions \(\Theta_{ijk}\)
+are continuous on
+
+\[
+\Delta_T
+=
+\{(s,t)\in\R^2:0\leq s\leq t\leq T\}.
+\]
+
+\end{assumption}
+
+\begin{assumption}[Nonnegative state weights]
+
+The coefficients satisfy
+
+\[
+\chi_m\geq0,
+\qquad
+\kappa_{ij}\geq0.
+\]
+
+All coefficients \(\Lambda_{ijk}\)
+are finite real numbers.
+
+\end{assumption}
+
+\begin{assumption}[Nonnegative damping]
+
+For every relevant state,
+
+\[
+\omega_i(\mathbf{x})\geq0.
+\]
+
+\end{assumption}
+
+\begin{assumption}[Trajectory regularity]
+
+The trajectory satisfies
+
+\[
+\mathbf{x}\in C^2([0,T],\R^n).
+\]
+
+\end{assumption}
+
+\begin{remark}
+
+These assumptions are sufficient conditions
+rather than necessary conditions.
+
+In particular, nonnegative damping guarantees
+that the exponential factor does not exceed
+one in absolute value.
+
+If negative damping is permitted, the
+exponential factor may instead produce
+amplification.
+
+\end{remark}
+
+\subsection{Bounded trajectory quantities}
+
+Since the trajectory and its derivatives
+are continuous on a compact interval,
+the following quantities are finite:
+
+\[
+X=
+\max_{t\in[0,T]}
+\norm{\mathbf{x}(t)},
+\]
+
+\[
+V=
+\max_{\substack{1\leq i\leq n\\t\in[0,T]}}
+|\dot{x}_i(t)|,
+\]
+
+and
+
+\[
+A=
+\max_{\substack{1\leq i\leq n\\t\in[0,T]}}
+|\ddot{x}_i(t)|.
+\]
+
+These constants will be used in the
+subsequent estimates.
+
+\subsection{Auxiliary coefficient bounds}
+
+Define
+
+\[
+M_2=
+\max_{i,j,k}
+\sup_{0\leq s\leq T}
+\left|
+\frac{\partial^2\Phi_i}
+{\partial x_j\partial x_k}
+(\mathbf{x}(s),s)
+\right|.
+\]
+
+Similarly, define
+
+\[
+P=
+\max_{i,j}
+\sup_{0\leq s\leq T}
+\left|
+\frac{\partial\Psi_i}
+{\partial x_j}
+(\mathbf{x}(s),s)
+\right|.
+\]
+
+For the third-order derivative contribution,
+let
+
+\[
+M_3=
+\max_i
+\sup_{0\leq t\leq T}
+\left|
+\frac{\partial^3\Phi_i}
+{\partial x_i^2\partial t}
+(\mathbf{x}(t),t)
+\right|.
+\]
+
+Finally, define
+
+\[
+K=\max_{i,j}\kappa_{ij},
+\qquad
+L=\max_{i,j,k}|\Lambda_{ijk}|.
+\]
+
+All these constants are finite under
+the stated assumptions.
+
+
+\section{Existence and Well-Definedness}
+
+\begin{theorem}[Existence on Finite Time Intervals]
+
+Suppose the regularity, nonnegative-weight,
+nonnegative-damping, and trajectory
+assumptions hold.
+
+Then Scott's Coherence Functional is finite
+and well-defined for every
+
+\[
+t\in[0,T].
+\]
+
+\end{theorem}
+
+\begin{proof}
+
+Consider first the integral component.
+
+The trajectory is continuous, and the
+coefficient functions have the required
+continuity properties.
+
+Consequently, the mixed derivative factor
+
+\[
+\frac{\partial^2\Phi_i}
+{\partial x_j\partial x_k}
+(\mathbf{x}(s),s)
+\]
+
+is continuous.
+
+The denominator
+
+\[
+1+\sum_{m=1}^{n}\chi_mx_m^2(s)
+\]
+
+is at least one because
+
+\[
+\chi_m\geq0.
+\]
+
+Likewise,
+
+\[
+1+
+\left|
+\frac{\partial\Psi_k}{\partial x_i}
+\right|
+\geq1.
+\]
+
+Thus, neither denominator can vanish.
+
+The damping integral is finite because
+its integrand is continuous on a compact
+interval.
+
+Therefore, the exponential factor is
+well-defined and finite.
+
+The phase integral is also finite, and
+the sine function is defined for every
+real phase argument.
+
+It follows that the complete integrand
+is continuous and bounded on the relevant
+integration interval.
+
+Its integral therefore exists and is finite.
+
+Next, consider the derivative component.
+
+The mixed third-order derivatives are
+continuous, and the trajectory is bounded.
+
+Since the coefficients \(\kappa_{ij}\)
+are finite, every factor
+
+\[
+1+\kappa_{ij}x_j^2(t)
+\]
+
+is finite.
+
+The finite product and finite summation
+therefore produce a finite quantity.
+
+Finally, consider the acceleration component.
+
+Its denominator satisfies
+
+\[
+1+
+|\dot{x}_i\dot{x}_j|
++
+|\ddot{x}_k|
+\geq1.
+\]
+
+The numerator is bounded because velocity
+and acceleration are bounded on \([0,T]\).
+
+All coefficients \(\Lambda_{ijk}\) are
+finite, and the sums contain finitely
+many terms.
+
+Thus, the acceleration component is also
+finite.
+
+All three components are therefore
+well-defined, proving the theorem.
+
+\end{proof}
+
+\subsection{A bound for the integral component}
+
+The integral component can be bounded
+explicitly.
+
+First, nonnegative damping gives
+
+\[
+0<E_{ij}(s,t)\leq1.
+\]
+
+Furthermore,
+
+\[
+|\sin(P_{ijk}(s,t))|\leq1.
+\]
+
+The state-dependent denominator satisfies
+
+\[
+1+\sum_{m=1}^{n}\chi_mx_m^2(s)\geq1.
+\]
+
+The derivative ratio satisfies
+
+\[
+\left|
+1+
+\frac{
+\partial\Psi_i/\partial x_j
+}{
+1+
+|\partial\Psi_k/\partial x_i|
+}
+\right|
+\leq1+P.
+\]
+
+Consequently,
+
+\[
+|H_{ijk}(\mathbf{x},s)|
+\leq M_2V^2(1+P).
+\]
+
+\begin{proposition}[Integral Component Bound]
+
+Under the preceding assumptions,
+
+\[
+|\Q_I(\mathbf{x},t)|
+\leq
+n^3TM_2V^2(1+P).
+\]
+
+\end{proposition}
+
+\begin{proof}
+
+Applying the triangle inequality gives
+
+\[
+\begin{aligned}
+|\Q_I(\mathbf{x},t)|
+\leq
+\sum_{i,j,k=1}^{n}
+\int_0^t
+&
+|H_{ijk}(\mathbf{x},s)|
+\\
+&\cdot E_{ij}(s,t)
+|\sin(P_{ijk}(s,t))|
+\,\dd s.
+\end{aligned}
+\]
+
+Using the established estimates,
+
+\[
+\begin{aligned}
+|\Q_I(\mathbf{x},t)|
+&\leq
+\sum_{i,j,k=1}^{n}
+\int_0^t
+M_2V^2(1+P)\,\dd s
+\\
+&\leq
+n^3TM_2V^2(1+P).
+\end{aligned}
+\]
+
+This proves the proposition.
+
+\end{proof}
+
+
+\section{Global Bounds for the Functional}
+
+We now establish bounds for the derivative
+and acceleration contributions.
+
+\subsection{Derivative component estimate}
+
+Since
+
+\[
+|x_j(t)|\leq X
+\]
+
+and
+
+\[
+\kappa_{ij}\leq K,
+\]
+
+we have
+
+\[
+1+\kappa_{ij}x_j^2(t)
+\leq1+KX^2.
+\]
+
+Therefore,
+
+\[
+\prod_{j=1}^{n}
+(1+\kappa_{ij}x_j^2(t))
+\leq
+(1+KX^2)^n.
+\]
+
+It follows that
+
+\[
+|\Q_D(\mathbf{x},t)|
+\leq
+nM_3(1+KX^2)^n.
+\]
+
+\subsection{Acceleration component estimate}
+
+The denominator satisfies
+
+\[
+1+
+|\dot{x}_i\dot{x}_j|
++
+|\ddot{x}_k|
+\geq1.
+\]
+
+Hence,
+
+\[
+\left|
+\frac{
+\dot{x}_i\dot{x}_j\ddot{x}_k
+}{
+1+
+|\dot{x}_i\dot{x}_j|
++
+|\ddot{x}_k|
+}
+\right|
+\leq V^2A.
+\]
+
+Since
+
+\[
+|\Lambda_{ijk}|\leq L,
+\]
+
+we obtain
+
+\[
+|\Q_A(\mathbf{x},t)|
+\leq n^3LV^2A.
+\]
+
+\subsection{Main global boundedness theorem}
+
+\begin{theorem}[Global Bound on a Finite Interval]
+
+Under the assumptions of this paper,
+
+\[
+\begin{aligned}
+|\Q(\mathbf{x},t)|
+\leq{}&
+n^3TM_2V^2(1+P)
+\\
+&+
+nM_3(1+KX^2)^n
+\\
+&+
+n^3LV^2A.
+\end{aligned}
+\]
+
+for every \(t\in[0,T]\).
+
+\end{theorem}
+
+\begin{proof}
+
+The decomposition
+
+\[
+\Q=\Q_I+\Q_D+\Q_A
+\]
+
+and the triangle inequality yield
+
+\[
+|\Q|
+\leq
+|\Q_I|+|\Q_D|+|\Q_A|.
+\]
+
+Substituting the three previously
+established component bounds gives
+
+\[
+\begin{aligned}
+|\Q|
+\leq{}&
+n^3TM_2V^2(1+P)
+\\
+&+
+nM_3(1+KX^2)^n
+\\
+&+
+n^3LV^2A.
+\end{aligned}
+\]
+
+This proves the theorem.
+
+\end{proof}
+
+\begin{remark}
+
+The estimate depends on the trajectory
+through \(X\), \(V\), and \(A\).
+
+It is therefore a finite-interval estimate
+rather than a universal bound independent
+of the trajectory.
+
+Additional assumptions would be necessary
+to obtain a trajectory-independent estimate.
+
+\end{remark}
+
+
+\section{The Damping and Oscillatory Components}
+
+\subsection{Exponential damping}
+
+The exponential factor is
+
+\[
+E_{ij}(s,t)
+=
+\exp\left(
+-\int_s^t
+\frac{\omega_i(\mathbf{x}(\xi))}
+{1+|\dot{x}_j(\xi)|}
+\,\dd\xi
+\right).
+\]
+
+This factor introduces accumulated attenuation
+over the interval from \(s\) to \(t\).
+
+Because the damping function is nonnegative,
+
+\[
+0<E_{ij}(s,t)\leq1.
+\]
+
+The velocity-dependent denominator modifies
+the effective damping rate.
+
+In particular, define
+
+\[
+r_{ij}(\xi)
+=
+\frac{\omega_i(\mathbf{x}(\xi))}
+{1+|\dot{x}_j(\xi)|}.
+\]
+
+For fixed nonnegative \(\omega_i\),
+increasing the velocity magnitude
+decreases this rate.
+
+\begin{proposition}[Damping Monotonicity]
+
+For every \(a\geq0\), the function
+
+\[
+f(v)=\frac{a}{1+v},
+\qquad v\geq0,
+\]
+
+is nonincreasing.
+
+\end{proposition}
+
+\begin{proof}
+
+Differentiation gives
+
+\[
+f'(v)
+=
+-\frac{a}{(1+v)^2}
+\leq0.
+\]
+
+Therefore, increasing \(v\) cannot increase
+the effective damping rate.
+
+\end{proof}
+
+\subsection{Accumulated oscillatory phase}
+
+The oscillatory factor is
+
+\[
+\sin\left(
+\int_s^t
+\Omega_{ijk}(\mathbf{x}(\eta))
+\,\dd\eta
++
+\Theta_{ijk}(s,t)
+\right).
+\]
+
+Its argument contains two contributions.
+
+The first is the accumulated trajectory-dependent
+phase.
+
+The second is the additional phase
+\(\Theta_{ijk}\).
+
+The combination permits oscillatory behavior
+to depend on both the evolving state and
+an independent phase contribution.
+
+Since
+
+\[
+-1\leq\sin(\theta)\leq1,
+\]
+
+the oscillatory factor cannot increase
+the absolute value of the integrand beyond
+the remaining multiplicative factors.
+
+\begin{remark}
+
+The phase contribution can change the sign
+of individual portions of the integral.
+
+Consequently, different regions of the
+integration interval may reinforce or
+partially cancel one another.
+
+This makes the integral component sensitive
+to phase relationships along the trajectory.
+
+\end{remark}
+
+
+\section{Nonlinear State and Acceleration Contributions}
+
+\subsection{State-dependent attenuation}
+
+The integral component contains the factor
+
+\[
+R(\mathbf{x},s)
+=
+\frac{1}
+{1+\sum_{m=1}^{n}\chi_mx_m^2(s)}.
+\]
+
+Under the nonnegative-weight assumption,
+
+\[
+0<R(\mathbf{x},s)\leq1.
+\]
+
+For fixed velocities, increasing the weighted
+state magnitude decreases this factor.
+
+Thus, the state-dependent denominator
+introduces a nonlinear attenuation mechanism.
+
+\subsection{Product-weighted derivative contribution}
+
+The derivative component contains
+
+\[
+W_i(\mathbf{x},t)
+=
+\prod_{j=1}^{n}
+(1+\kappa_{ij}x_j^2(t)).
+\]
+
+Since every coefficient is nonnegative,
+
+\[
+W_i(\mathbf{x},t)\geq1.
+\]
+
+Unlike the denominator in the integral
+component, this product increases with
+the magnitude of the weighted state
+coordinates.
+
+It therefore acts as a multiplicative
+state-dependent weighting mechanism.
+
+\subsection{Acceleration correction}
+
+Consider
+
+\[
+\Q_A
+=
+\sum_{i,j,k=1}^{n}
+\Lambda_{ijk}
+\frac{
+\dot{x}_i\dot{x}_j\ddot{x}_k
+}{
+1+
+|\dot{x}_i\dot{x}_j|
++
+|\ddot{x}_k|
+}.
+\]
+
+For convenience, define
+
+\[
+u=\dot{x}_i\dot{x}_j,
+\qquad
+v=\ddot{x}_k.
+\]
+
+Then
+
+\[
+\left|
+\frac{uv}{1+|u|+|v|}
+\right|
+=
+\frac{|u||v|}{1+|u|+|v|}.
+\]
+
+Because
+
+\[
+1+|u|+|v|\geq|u|
+\]
+
+and
+
+\[
+1+|u|+|v|\geq|v|,
+\]
+
+we obtain
+
+\[
+\left|
+\frac{uv}{1+|u|+|v|}
+\right|
+\leq
+\min(|u|,|v|).
+\]
+
+Thus,
+
+\[
+\left|
+\frac{
+\dot{x}_i\dot{x}_j\ddot{x}_k
+}{
+1+
+|\dot{x}_i\dot{x}_j|
++
+|\ddot{x}_k|
+}
+\right|
+\leq
+\min\left(
+|\dot{x}_i\dot{x}_j|,
+|\ddot{x}_k|
+\right).
+\]
+
+This inequality provides an additional
+estimate for the acceleration contribution.
+
+\subsection{Structural interpretation}
+
+The acceleration term combines two velocity
+factors with one acceleration factor.
+
+Its denominator guarantees that the
+expression remains well-defined for
+all real velocity and acceleration values.
+
+It also moderates the growth of the
+numerator when the quantities become large.
+
+However, the denominator does not imply
+that the entire acceleration contribution
+is universally bounded independently
+of the trajectory.
+
+Such a conclusion would require further
+restrictions on the admissible velocities
+and accelerations.
+
+
+\section{Continuity and Time Dependence}
+
+The preceding results establish existence
+and boundedness.
+
+We now examine continuity.
+
+\begin{theorem}[Continuity in Time]
+
+Suppose the regularity assumptions hold
+and all coefficient functions are continuous
+along the trajectory.
+
+Then
+
+\[
+t\longmapsto\Q(\mathbf{x},t)
+\]
+
+is continuous on \([0,T]\).
+
+\end{theorem}
+
+\begin{proof}
+
+Consider the integral component.
+
+Its integrand is continuous in the variables
+\(s\) and \(t\) on the compact triangular
+domain
+
+\[
+\Delta_T
+=
+\{(s,t):0\leq s\leq t\leq T\}.
+\]
+
+The exponential and sine functions are
+continuous compositions of the accumulated
+integrals.
+
+All denominators remain strictly positive.
+
+The parameter-dependent integral therefore
+varies continuously with its upper limit
+and with its integrand.
+
+Hence, every summand in the integral
+component is continuous in \(t\).
+
+The derivative component is continuous
+because its derivatives and state-dependent
+factors are continuous.
+
+The acceleration component is continuous
+because the trajectory belongs to \(C^2\)
+and its denominator is strictly positive.
+
+Since the functional is a finite sum of
+these continuous components, it is
+continuous on \([0,T]\).
+
+\end{proof}
+
+\begin{corollary}[Attainment of Extreme Values]
+
+The functional attains a maximum and
+a minimum on every compact interval
+\([0,T]\).
+
+\end{corollary}
+
+\begin{proof}
+
+The functional is continuous on the
+compact interval \([0,T]\).
+
+The extreme value theorem therefore
+guarantees that it attains both a maximum
+and a minimum.
+
+\end{proof}
+
+
+\section{Nonlocal Structure and Memory Dependence}
+
+An important feature of the integral
+component is that its value at time \(t\)
+depends on trajectory information accumulated
+over the interval preceding \(t\).
+
+This property distinguishes the integral
+component from purely instantaneous
+nonlinear expressions.
+
+\subsection{Construction of the memory kernel}
+
+Recall the definitions
+
+\[
+D_{ij}(s,t)
+=
+\int_s^t
+\frac{\omega_i(\mathbf{x}(\xi))}
+{1+|\dot{x}_j(\xi)|}
+\,\dd\xi
+\]
+
+and
+
+\[
+P_{ijk}(s,t)
+=
+\int_s^t
+\Omega_{ijk}(\mathbf{x}(\eta))
+\,\dd\eta
++
+\Theta_{ijk}(s,t).
+\]
+
+Define the combined memory kernel by
+
+\[
+K_{ijk}(s,t)
+=
+e^{-D_{ij}(s,t)}
+\sin(P_{ijk}(s,t)).
+\]
+
+The integral component can consequently
+be represented as
+
+\[
+\Q_I(\mathbf{x},t)
+=
+\sum_{i,j,k=1}^{n}
+\int_0^t
+K_{ijk}(s,t)
+H_{ijk}(\mathbf{x},s)
+\,\dd s.
+\]
+
+This representation separates the historical
+weighting mechanism from the instantaneous
+trajectory-dependent contribution.
+
+\subsection{Kernel magnitude estimate}
+
+Under nonnegative damping,
+
+\[
+D_{ij}(s,t)\geq0.
+\]
+
+Therefore,
+
+\[
+\begin{aligned}
+|K_{ijk}(s,t)|
+&=
+e^{-D_{ij}(s,t)}
+|\sin(P_{ijk}(s,t))|
+\\
+&\leq e^{-D_{ij}(s,t)}
+\\
+&\leq1.
+\end{aligned}
+\]
+
+Thus,
+
+\[
+|K_{ijk}(s,t)|\leq1.
+\]
+
+\subsection{Exponential memory attenuation}
+
+Suppose there exists a constant
+\(\delta>0\) such that
+
+\[
+\frac{\omega_i(\mathbf{x}(\xi))}
+{1+|\dot{x}_j(\xi)|}
+\geq\delta
+\]
+
+throughout the relevant interval.
+
+Then
+
+\[
+D_{ij}(s,t)
+\geq\delta(t-s).
+\]
+
+Consequently,
+
+\[
+|K_{ijk}(s,t)|
+\leq e^{-\delta(t-s)}.
+\]
+
+This establishes an exponentially decaying
+upper bound on the influence of earlier
+trajectory states.
+
+\subsection{Uniform memory-weight estimate}
+
+Integrating the preceding inequality gives
+
+\[
+\int_0^t
+|K_{ijk}(s,t)|\,\dd s
+\leq
+\int_0^t
+e^{-\delta(t-s)}\,\dd s.
+\]
+
+Evaluating the integral,
+
+\[
+\begin{aligned}
+\int_0^t
+e^{-\delta(t-s)}\,\dd s
+&=
+\frac{1-e^{-\delta t}}{\delta}.
+\end{aligned}
+\]
+
+Therefore,
+
+\[
+\int_0^t
+|K_{ijk}(s,t)|\,\dd s
+\leq\frac{1}{\delta}.
+\]
+
+The bound is independent of the observation
+time \(t\).
+
+This demonstrates that a uniformly positive
+effective damping rate produces a uniformly
+bounded total memory weight, even as the
+observation interval increases.
+
+\begin{remark}
+
+The estimate controls the total magnitude
+of the memory kernel.
+
+It does not imply that every individual
+historical contribution is positive, since
+the oscillatory phase may change its sign.
+
+\end{remark}
+
+
+\section{Parameter Sensitivity and Perturbation Analysis}
+
+The behavior of Scott's Coherence Functional
+depends on several independent parameters.
+
+These include damping coefficients,
+oscillatory coefficients, nonlinear state
+weights, and acceleration coefficients.
+
+A systematic analysis of their influence
+provides additional information concerning
+the structural sensitivity of the construction.
+
+\subsection{Generalized damping parameter}
+
+Introduce a nonnegative parameter
+\(\alpha\) into the damping expression:
+
+\[
+E_{ij}^{(\alpha)}(s,t)
+=
+\exp(-\alpha D_{ij}(s,t)).
+\]
+
+For \(\alpha=1\), the original damping
+factor is recovered.
+
+Differentiating with respect to \(\alpha\),
+
+\[
+\frac{\partial E_{ij}^{(\alpha)}}
+{\partial\alpha}
+=
+-D_{ij}(s,t)
+e^{-\alpha D_{ij}(s,t)}.
+\]
+
+Since \(D_{ij}(s,t)\geq0\),
+
+\[
+\frac{\partial E_{ij}^{(\alpha)}}
+{\partial\alpha}
+\leq0.
+\]
+
+Thus, increasing the damping parameter
+cannot increase the exponential attenuation
+factor.
+
+A second differentiation yields
+
+\[
+\frac{\partial^2 E_{ij}^{(\alpha)}}
+{\partial\alpha^2}
+=
+D_{ij}^2(s,t)
+e^{-\alpha D_{ij}(s,t)}
+\geq0.
+\]
+
+The attenuation factor is therefore
+decreasing and convex as a function
+of \(\alpha\).
+
+\subsection{Sensitivity of the integral component}
+
+Let \(\Q_I^{(\alpha)}\) denote the integral
+component with generalized damping.
+
+Under the established regularity conditions,
+differentiation under the integral sign gives
+
+\[
+\begin{aligned}
+\frac{\partial\Q_I^{(\alpha)}}{\partial\alpha}
+=
+-\sum_{i,j,k=1}^{n}
+\int_0^t
+&D_{ij}(s,t)
+e^{-\alpha D_{ij}(s,t)}
+\\
+&\cdot
+\sin(P_{ijk}(s,t))
+H_{ijk}(\mathbf{x},s)
+\,\dd s.
+\end{aligned}
+\]
+
+This derivative measures the sensitivity
+of the integral component to changes
+in the damping parameter.
+
+Importantly, its sign is not necessarily
+negative because the oscillatory factor
+and the trajectory-dependent contribution
+may change sign.
+
+Therefore, although the exponential
+attenuation decreases monotonically
+with \(\alpha\), the complete integral
+component need not do so.
+
+\subsection{Sensitivity bounds}
+
+Since
+
+\[
+D e^{-\alpha D}\leq\frac{1}{e\alpha}
+\]
+
+for \(D\geq0\) and \(\alpha>0\), we obtain
+
+\[
+\begin{aligned}
+\left|
+\frac{\partial\Q_I^{(\alpha)}}{\partial\alpha}
+\right|
+&\leq
+\frac{n^3tM_2V^2(1+P)}
+{e\alpha}.
+\end{aligned}
+\]
+
+Hence,
+
+\[
+\left|
+\frac{\partial\Q_I^{(\alpha)}}{\partial\alpha}
+\right|
+\leq
+\frac{n^3TM_2V^2(1+P)}
+{e\alpha}.
+\]
+
+This provides a quantitative estimate
+of parameter sensitivity for positive
+damping parameters.
+
+\subsection{Perturbations of the trajectory}
+
+Consider two trajectories
+
+\[
+\mathbf{x},\mathbf{y}
+\in\mathcal{X}_T.
+\]
+
+Define their separation by
+
+\[
+\eps
+=
+\norm{\mathbf{x}-\mathbf{y}}_{C^2}.
+\]
+
+A natural question is whether small
+changes in the trajectory produce small
+changes in the functional.
+
+Assume additionally that the coefficient
+functions and all derivatives required
+by the functional are locally Lipschitz
+on a common bounded region containing
+the images of both trajectories.
+
+\begin{theorem}[Local Perturbation Stability]
+
+Under the preceding additional assumptions,
+there exists a finite constant \(C_T\)
+such that
+
+\[
+\sup_{t\in[0,T]}
+|\Q(\mathbf{x},t)-\Q(\mathbf{y},t)|
+\leq
+C_T
+\norm{\mathbf{x}-\mathbf{y}}_{C^2}.
+\]
+
+\end{theorem}
+
+\begin{proof}
+
+The functional is composed of finitely many
+products, quotients, compositions, and
+integrals of trajectory-dependent functions.
+
+On a common bounded region, the relevant
+coefficient functions and their derivatives
+are locally Lipschitz.
+
+Furthermore, all denominators are bounded
+away from zero by the nonnegative-weight
+assumptions.
+
+Consequently, the instantaneous factors
+in each summand satisfy local Lipschitz
+estimates with respect to the state,
+velocity, and acceleration.
+
+The accumulated damping and phase terms
+inherit corresponding estimates because
+their integration intervals have uniformly
+bounded length.
+
+The exponential and sine functions are
+Lipschitz on bounded intervals.
+
+Applying the product and composition
+estimates to the integral, derivative,
+and acceleration components yields
+finite constants \(C_I,C_D,C_A\) such that
+
+\[
+\sup_t
+|\Q_I(\mathbf{x},t)-\Q_I(\mathbf{y},t)|
+\leq C_I\eps,
+\]
+
+\[
+\sup_t
+|\Q_D(\mathbf{x},t)-\Q_D(\mathbf{y},t)|
+\leq C_D\eps,
+\]
+
+and
+
+\[
+\sup_t
+|\Q_A(\mathbf{x},t)-\Q_A(\mathbf{y},t)|
+\leq C_A\eps.
+\]
+
+Combining the estimates gives
+
+\[
+\sup_t
+|\Q(\mathbf{x},t)-\Q(\mathbf{y},t)|
+\leq
+(C_I+C_D+C_A)\eps.
+\]
+
+Setting
+
+\[
+C_T=C_I+C_D+C_A
+\]
+
+proves the result.
+
+\end{proof}
+
+\subsection{Interpretation of perturbation stability}
+
+The preceding estimate establishes a
+distinction between boundedness and stability.
+
+Boundedness controls the magnitude of
+the functional along an individual trajectory.
+
+Perturbation stability controls the difference
+between functional values associated with
+two nearby trajectories.
+
+This distinction is relevant when studying
+approximate trajectories, numerical solutions,
+and parameter-dependent models.
+
+
+\section{Asymptotic Behavior and Limiting Cases}
+
+The behavior of Scott's Coherence Functional
+under limiting regimes provides additional
+information about its mathematical structure.
+
+We consider several cases in which individual
+contributions become dominant, negligible,
+or asymptotically simplified.
+
+\subsection{The small-time regime}
+
+Consider the limit
+
+\[
+t\to0^+.
+\]
+
+From the integral bound,
+
+\[
+|\Q_I(\mathbf{x},t)|
+\leq
+n^3tM_2V^2(1+P).
+\]
+
+Therefore,
+
+\[
+\lim_{t\to0^+}
+\Q_I(\mathbf{x},t)=0.
+\]
+
+Since the remaining two components are
+continuous in time,
+
+\[
+\lim_{t\to0^+}
+\Q(\mathbf{x},t)
+=
+\Q_D(\mathbf{x},0)
++
+\Q_A(\mathbf{x},0).
+\]
+
+Thus, the integral contribution becomes
+negligible over sufficiently short
+observation intervals.
+
+\subsection{The strong-damping regime}
+
+Suppose the effective damping rate satisfies
+
+\[
+\frac{\omega_i(\mathbf{x}(\xi))}
+{1+|\dot{x}_j(\xi)|}
+\geq\delta
+\]
+
+for some \(\delta>0\).
+
+Then
+
+\[
+|E_{ij}(s,t)|
+\leq e^{-\delta(t-s)}.
+\]
+
+For an individual summand, suppose
+
+\[
+|H_{ijk}(\mathbf{x},s)|
+\leq M_H
+\]
+
+for a finite constant \(M_H\).
+
+It follows that
+
+\[
+\begin{aligned}
+\left|
+\int_0^t
+E_{ij}(s,t)
+\sin\bigl(P_{ijk}(s,t)\bigr)
+H_{ijk}(\mathbf{x},s)
+\,ds
+\right|
+&\leq
+M_H\int_0^t e^{-\delta(t-s)}\,ds
+\\[6pt]
+&=
+\frac{M_H}{\delta}
+\left(1-e^{-\delta t}\right)
+\\[6pt]
+&\leq
+\frac{M_H}{\delta}.
+\end{aligned}
+\]
+
+Hence, the individual memory contributions
+remain uniformly controlled under sufficiently
+strong damping.
+
+\subsection{The weak-damping regime}
+
+Suppose the damping coefficient is scaled
+by a parameter \(\alpha\) satisfying
+
+\[
+\alpha\to0^+.
+\]
+
+Then
+
+\[
+E_{ij}^{(\alpha)}(s,t)
+=
+e^{-\alpha D_{ij}(s,t)}
+\longrightarrow1.
+\]
+
+For a fixed finite observation interval,
+the convergence is uniform because the
+accumulated damping quantity is bounded.
+
+Consequently, the integral component
+approaches the undamped expression
+
+\[
+\begin{aligned}
+\Q_I^{(0)}(\mathbf{x},t)
+=
+\sum_{i,j,k=1}^{n}
+\int_0^t
+&H_{ijk}(\mathbf{x},s)
+\\
+&\cdot
+\sin(P_{ijk}(s,t))
+\,\dd s.
+\end{aligned}
+\]
+
+This limiting case isolates the influence
+of accumulated phase and nonlinear trajectory
+dependence from exponential attenuation.
+
+\subsection{Large-state behavior}
+
+Consider the state-dependent factor
+
+\[
+R(\mathbf{x},s)
+=
+\frac{1}
+{1+\sum_{m=1}^{n}\chi_mx_m^2(s)}.
+\]
+
+If at least one positively weighted
+state coordinate becomes unbounded along
+a sequence, then
+
+\[
+R(\mathbf{x},s)\to0.
+\]
+
+For bounded velocities and bounded
+remaining integrand factors, the corresponding
+velocity contribution therefore approaches zero.
+
+This identifies a conditional attenuation
+mechanism associated with large weighted
+state magnitudes.
+
+\subsection{Limiting behavior of the acceleration term}
+
+Consider the scalar expression
+
+\[
+F(u,v)
+=
+\frac{uv}{1+|u|+|v|}.
+\]
+
+If \(u\) is fixed and \(v\to0\), then
+
+\[
+\lim_{v\to0}F(u,v)=0.
+\]
+
+Likewise, if \(v\) is fixed and \(u\to0\),
+
+\[
+\lim_{u\to0}F(u,v)=0.
+\]
+
+If both quantities become large with
+comparable magnitudes, the expression
+can also become large.
+
+Thus, the nonlinear denominator moderates
+the growth of the acceleration contribution
+but does not establish universal boundedness.
+
+
+\section{Special Cases and Simplifications}
+
+The general expression contains several
+mechanisms that can be examined independently
+through particular parameter choices.
+
+\subsection{Vanishing acceleration contribution}
+
+If
+
+\[
+\Lambda_{ijk}=0
+\]
+
+for every triple of indices, then
+
+\[
+\Q_A=0.
+\]
+
+The functional reduces to
+
+\[
+\Q=\Q_I+\Q_D.
+\]
+
+\subsection{Vanishing state weights}
+
+If
+
+\[
+\chi_m=0
+\]
+
+for every \(m\), then
+
+\[
+1+\sum_{m=1}^{n}\chi_mx_m^2=1.
+\]
+
+The velocity contribution simplifies to
+
+\[
+\dot{x}_j(s)\dot{x}_k(s).
+\]
+
+\subsection{Vanishing oscillatory phase}
+
+If
+
+\[
+\Omega_{ijk}=0
+\]
+
+and
+
+\[
+\Theta_{ijk}=0,
+\]
+
+then
+
+\[
+\sin(0)=0.
+\]
+
+Consequently,
+
+\[
+\Q_I=0.
+\]
+
+The functional then consists of its
+derivative and acceleration contributions.
+
+\subsection{Constant trajectories}
+
+Suppose
+
+\[
+\mathbf{x}(t)=\mathbf{x}_0
+\]
+
+for every \(t\).
+
+Then
+
+\[
+\dot{x}_i(t)=0
+\]
+
+and
+
+\[
+\ddot{x}_i(t)=0.
+\]
+
+The integral contribution vanishes because
+its numerator contains a product of velocities.
+
+The acceleration contribution also vanishes.
+
+Therefore,
+
+\[
+\begin{aligned}
+\Q(\mathbf{x}_0,t)
+=
+\sum_{i=1}^{n}
+&
+\frac{\partial^3\Phi_i}
+{\partial x_i^2\partial t}
+(\mathbf{x}_0,t)
+\\
+&\cdot
+\prod_{j=1}^{n}
+(1+\kappa_{ij}x_{0,j}^2).
+\end{aligned}
+\]
+
+This special case isolates the derivative
+contribution of the functional.
+
+\subsection{One-dimensional reduction}
+
+For \(n=1\), all triple summations
+collapse into a single term.
+
+Writing \(x=x_1\), the functional becomes
+
+\[
+\begin{aligned}
+\Q(x,t)
+={}&
+\int_0^t
+\Phi_{1,xx}(x(s),s)
+E(s,t)
+\\
+&\cdot
+\sin(P(s,t))
+\frac{\dot{x}^2(s)}
+{1+\chi_1x^2(s)}
+\\
+&\cdot
+\left(
+1+
+\frac{\Psi_{1,x}(x(s),s)}
+{1+|\Psi_{1,x}(x(s),s)|}
+\right)
+\,\dd s
+\\
+&+
+\Phi_{1,xxt}(x(t),t)
+(1+\kappa_{11}x^2(t))
+\\
+&+
+\Lambda_{111}
+\frac{\dot{x}^2(t)\ddot{x}(t)}
+{1+\dot{x}^2(t)+|\ddot{x}(t)|}.
+\end{aligned}
+\]
+
+This reduction provides a simpler setting
+for numerical experimentation and
+analytical examination.
+
+
+\section{Possible Generalizations}
+
+The functional can be generalized in several
+directions without changing its fundamental
+three-component structure.
+
+\subsection{Generalized damping}
+
+Introduce a positive parameter \(\alpha\):
+
+\[
+E_{ij}^{(\alpha)}(s,t)
+=
+\exp\left(
+-\alpha
+\int_s^t
+\frac{\omega_i(\mathbf{x}(\xi))}
+{1+|\dot{x}_j(\xi)|}
+\,\dd\xi
+\right).
+\]
+
+The parameter controls the strength
+of the damping contribution.
+
+For \(\alpha=1\), the original expression
+is recovered.
+
+\subsection{Generalized oscillatory functions}
+
+The sine function may be replaced by
+a more general bounded continuous function
+\(g:\R\to\R\).
+
+The corresponding factor becomes
+
+\[
+g(P_{ijk}(s,t)).
+\]
+
+If
+
+\[
+\sup_{\theta\in\R}|g(\theta)|<\infty,
+\]
+
+then the principal existence and
+boundedness arguments remain applicable.
+
+\subsection{Higher-order trajectory dependence}
+
+The acceleration term may be extended
+to include third-order derivatives.
+
+For example,
+
+\[
+\Q_J
+=
+\sum_{i,j,k=1}^{n}
+\Gamma_{ijk}
+\frac{
+\dot{x}_i\dot{x}_j\dddot{x}_k
+}{
+1+
+|\dot{x}_i\dot{x}_j|
++
+|\dddot{x}_k|
+}.
+\]
+
+Such an extension requires trajectories
+with sufficient additional regularity,
+for example
+
+\[
+\mathbf{x}\in C^3([0,T],\R^n).
+\]
+
+\subsection{Alternative nonlinear attenuation}
+
+The state-dependent denominator may
+be generalized to
+
+\[
+1+
+\sum_{m=1}^{n}
+\chi_m|x_m|^p,
+\qquad p>0.
+\]
+
+For nonnegative coefficients, this
+expression remains positive.
+
+The parameter \(p\) controls the rate
+at which the attenuation changes with
+state magnitude.
+
+\subsection{Generalized product weighting}
+
+The derivative contribution may also
+be extended through a positive weighting
+function \(w_{ij}\):
+
+\[
+\Q_D^{(w)}
+=
+\sum_{i=1}^{n}
+\frac{\partial^3\Phi_i}
+{\partial x_i^2\partial t}
+\prod_{j=1}^{n}
+w_{ij}(x_j).
+\]
+
+Suitable assumptions on \(w_{ij}\)
+would preserve the existence of this
+component.
+
+These generalizations suggest that the
+original construction can be regarded
+as one member of a broader family of
+trajectory-dependent nonlinear functionals.
+
+
+\section{Limitations and Open Mathematical Problems}
+
+Although the preceding analysis establishes
+several fundamental properties of Scott's
+Coherence Functional, a number of mathematical
+questions remain unresolved.
+
+The distinction between established results
+and potential extensions is important
+for understanding the actual scope
+of the construction.
+
+\subsection{Trajectory-independent bounds}
+
+The global estimate established in this
+paper depends on
+
+\[
+X,\qquad V,\qquad A.
+\]
+
+These quantities represent bounds on
+the trajectory, velocity, and acceleration.
+
+Consequently, the existing estimate does
+not establish a universal upper bound
+over the entire space \(\mathcal{X}_T\).
+
+A natural extension would investigate
+whether additional restrictions on admissible
+trajectories could produce estimates
+independent of individual trajectory
+magnitudes.
+
+\subsection{Differentiability with respect
+to trajectories}
+
+Continuity with respect to trajectories
+does not automatically imply differentiability.
+
+A further investigation would examine
+whether the mapping
+
+\[
+\mathbf{x}\mapsto\Q(\mathbf{x},t)
+\]
+
+possesses a Fréchet derivative on appropriate
+subsets of the trajectory space.
+
+If such a derivative exists, it would
+provide a linear approximation of the
+functional under small perturbations.
+
+Specifically, one would seek a bounded
+linear operator \(D\Q(\mathbf{x})\)
+satisfying
+
+\[
+\begin{aligned}
+\Q(\mathbf{x}+\mathbf{h},t)
+={}&
+\Q(\mathbf{x},t)
+\\
+&+
+D\Q(\mathbf{x})[\mathbf{h}]
++
+o(\norm{\mathbf{h}}_{C^2}),
+\end{aligned}
+\]
+
+as
+
+\[
+\norm{\mathbf{h}}_{C^2}\to0.
+\]
+
+Establishing this property would provide
+a foundation for a more complete
+variational analysis.
+
+\subsection{Existence of conservation laws}
+
+The current formulation does not establish
+that the functional is conserved along
+solutions of a particular differential equation.
+
+A conservation property would require
+additional structural assumptions.
+
+One possible objective would be to identify
+conditions under which
+
+\[
+\frac{\dd}{\dd t}
+\Q(\mathbf{x},t)=0
+\]
+
+along a specified class of trajectories.
+
+Such a result would require an appropriate
+evolution equation and a detailed analysis
+of the time derivative of each component.
+
+\subsection{Monotonicity and sign structure}
+
+The oscillatory integral component is not
+necessarily nonnegative.
+
+Indeed, the sine factor can change sign,
+while the derivative and acceleration
+contributions may also be positive or negative.
+
+Therefore, the functional cannot generally
+be interpreted as a positive-definite quantity.
+
+An interesting open problem is to identify
+additional restrictions on the coefficient
+functions and trajectories that guarantee
+monotonicity or sign definiteness.
+
+\subsection{Numerical approximation}
+
+Another direction concerns the numerical
+evaluation of the functional.
+
+The nested integrals and nonlinear
+derivative terms introduce several
+potential sources of numerical error.
+
+A numerical investigation could compare
+quadrature methods and trajectory
+approximation schemes.
+
+One possible objective would be to establish
+an estimate of the form
+
+\[
+|\Q(\mathbf{x},t)-\Q_h(\mathbf{x},t)|
+\leq Ch^p,
+\]
+
+where \(h\) denotes a discretization
+parameter and \(p\) represents the
+convergence order.
+
+The derivation of such an estimate would
+require assumptions on the smoothness
+of the integrand and the selected
+numerical approximation method.
+
+\subsection{Existence of stationary trajectories}
+
+Another possible direction is the
+identification of trajectories for which
+the functional becomes stationary.
+
+A corresponding investigation could seek
+trajectories satisfying
+
+\[
+D\Q(\mathbf{x})[\mathbf{h}]=0
+\]
+
+for every admissible perturbation
+\(\mathbf{h}\).
+
+This would require an appropriate
+differentiability theory and additional
+conditions on the trajectory space.
+
+These unresolved questions provide
+several directions for subsequent
+mathematical investigation.
+
+
+\section{Conclusion}
+
+This paper introduced Scott's Coherence
+Functional, a trajectory-dependent
+mathematical construction combining
+integral, derivative, oscillatory,
+damping, and acceleration contributions.
+
+The functional contains three principal
+components.
+
+The first combines mixed second-order
+spatial derivatives with accumulated
+exponential damping, oscillatory phase,
+and nonlinear velocity dependence.
+
+The second introduces third-order
+derivatives weighted by products
+of state-dependent factors.
+
+The third introduces a nonlinear
+correction involving velocity
+and acceleration.
+
+Under appropriate regularity, boundedness,
+and sign assumptions, the functional
+was shown to be well-defined on finite
+time intervals.
+
+An explicit global bound was established
+in terms of the trajectory, velocity,
+acceleration, and relevant coefficient
+functions.
+
+Continuity in time was also demonstrated,
+allowing the functional to attain maximum
+and minimum values on compact intervals.
+
+The analysis further identified a
+nonlocal memory structure within the
+integral component.
+
+Under a uniformly positive effective
+damping rate, the total absolute memory
+weight admits a uniform bound independent
+of the observation time.
+
+Parameter sensitivity was examined
+through a generalized damping parameter,
+and additional assumptions were used
+to establish local perturbation stability
+with respect to trajectory changes.
+
+Several limiting cases were also
+investigated, including short-time,
+strong-damping, weak-damping, and
+large-state regimes.
+
+The construction admits potential
+generalizations involving alternative
+oscillatory functions, higher-order
+trajectory derivatives, and nonlinear
+attenuation mechanisms.
+
+Nevertheless, several mathematical
+questions remain open.
+
+These include Fréchet differentiability,
+trajectory-independent bounds,
+conservation properties, sign definiteness,
+and numerical convergence.
+
+A particularly interesting direction
+is the development of a complete
+variational theory for \(\Q\), examining
+how changes in the trajectory influence
+the resulting functional.
+
+The present work provides an initial
+analytical foundation for these
+investigations and establishes a
+framework within which the structural
+properties of Scott's Coherence Functional
+can be studied more systematically.
+
+
+\section{Acknowledgments}
+
+The author thanks the teachers and mentors
+who encouraged independent mathematical
+exploration and the development of
+original mathematical ideas.
+
+The author also acknowledges the
+foundational contributions of researchers
+in functional analysis, differential
+equations, and mathematical analysis,
+whose established results provide
+important tools for the present work.
+
+
+\begin{thebibliography}{99}
+
+\bibitem{conway}
+J. B. Conway,
+
+\emph{A Course in Functional Analysis},
+
+2nd ed., Graduate Texts in Mathematics,
+vol. 96, Springer, New York, 1990.
+
+\bibitem{rudin}
+W. Rudin,
+
+\emph{Principles of Mathematical Analysis},
+
+3rd ed., International Series in Pure
+and Applied Mathematics,
+McGraw-Hill, New York, 1976.
+
+\bibitem{kreyszig}
+E. Kreyszig,
+
+\emph{Introductory Functional Analysis
+with Applications},
+
+John Wiley \& Sons, New York, 1978.
+
+\bibitem{walter}
+W. Walter,
+
+\emph{Ordinary Differential Equations},
+
+Springer-Verlag, New York, 1998.
+
+\bibitem{evans}
+L. C. Evans,
+
+\emph{Partial Differential Equations},
+
+2nd ed., Graduate Studies in Mathematics,
+vol. 19, American Mathematical Society,
+Providence, 2010.
+
+\bibitem{dieudonne}
+J. Dieudonn\'e,
+
+\emph{Foundations of Modern Analysis},
+
+Academic Press, New York, 1960.
+
+\bibitem{cartan}
+H. Cartan,
+
+\emph{Differential Calculus},
+
+Hermann, Paris, 1971.
+
+\bibitem{kreyszig2}
+E. Kreyszig,
+
+\emph{Advanced Engineering Mathematics},
+
+10th ed., John Wiley \& Sons, 2011.
+
+\end{thebibliography}
+
+
+\end{document}
